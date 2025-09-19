@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx
+  name: webserver
   namespace: dapr-app
   labels:
     app: webserver
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: webserver
@@ -14,10 +14,14 @@ spec:
     metadata:
       labels:
         app: webserver
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "dapr-app-webserver"
+        dapr.io/app-port: "8080"
     spec:
       containers:
       - name: webserver
-        image: us-central1-docker.pkg.dev/gcp-genai-inframod-prj01/dapr-testing/webserver:v1
+        image: us-central1-docker.pkg.dev/gcp-genai-inframod-prj01/dapr-testing/webserver:v2
         ports:
         - containerPort: 8080
 ---

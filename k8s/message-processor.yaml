@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: message-processor
+  namespace: dapr-app
+  labels:
+    app: message-processor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: message-processor
+  template:
+    metadata:
+      labels:
+        app: message-processor
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "dapr-app-message-processor"
+        dapr.io/app-port: "8081"
+    spec:
+      containers:
+      - name: message-processor
+        image: us-central1-docker.pkg.dev/gcp-genai-inframod-prj01/dapr-testing/message-processor:v1
+        ports:
+        - containerPort: 8081
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: message-processor
+#   namespace: dapr-app
+# spec:
+#   selector:
+#     app: message-processor
+#   ports:
+#     - protocol: TCP
+#       port: 80
+#       targetPort: 8081
+#   type: ClusterIP
