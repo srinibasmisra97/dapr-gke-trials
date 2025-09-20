@@ -1,0 +1,37 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: message-pub-sub
+  namespace: dapr-app
+spec:
+  type: pubsub.rabbitmq
+  version: v1
+  metadata:
+  - name: connectionString
+    secretKeyRef:
+      name: dapr-app-rabbitmq-default-user
+      key: connection_string
+  - name: protocol
+    value: amqp  
+  - name: hostname
+    secretKeyRef:
+      name: dapr-app-rabbitmq-default-user
+      key: host
+  - name: username
+    secretKeyRef:
+      name: dapr-app-rabbitmq-default-user
+      key: username
+  - name: password
+    secretKeyRef:
+      name: dapr-app-rabbitmq-default-user
+      key: password
+  - name: durable
+    value: "false"
+  - name: deletedWhenUnused
+    value: "false"
+  - name: autoAck
+    value: "false"
+  - name: reconnectWait
+    value: "0"
+  - name: concurrency
+    value: parallel
