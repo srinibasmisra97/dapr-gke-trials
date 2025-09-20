@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: message-processor
-  namespace: dapr-app
   labels:
     app: message-processor
 spec:
@@ -16,7 +15,7 @@ spec:
         app: message-processor
       annotations:
         dapr.io/enabled: "true"
-        dapr.io/app-id: "dapr-app-message-processor"
+        dapr.io/app-id: "message-processor"
         dapr.io/app-port: "8081"
     spec:
       containers:
